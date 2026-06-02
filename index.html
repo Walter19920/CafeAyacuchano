@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ruta Interactiva</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="loading-screen">
+  <div class="loader">
+    <div class="loader-text">Cargando</div>
+    <div class="circle">
+      <div class="progress"></div>
+    </div>
+    <div id="percent">0%</div>
+  </div>
+</div>
+<div id="mapa">
+  <img src="img/imag-finca.png" id="fondo">
+
+  <svg id="rutaSVG" viewBox="0 0 1000 500" preserveAspectRatio="none">
+<path id="camino"
+d="M 60 370
+   C 150 320, 210 380, 300 370
+   C 350 340, 380 300, 440 290
+   C 570 320, 600 250, 680 280
+   C 740 360, 1030 180, 880 320
+   C 800 370, 940 350, 990 500"
+fill="none"
+stroke="transparent"
+stroke-width="4"/>
+  </svg>
+
+  <div id="personaje"></div>
+  <div id="puntos"></div>
+</div>
+
+<div id="modal">
+  <figure id="modal-content">
+    <div id="media">
+      <!-- CARRUSEL -->
+      <div id="carrusel">
+        <button class="carrusel-btn prev" id="prevBtn">◀</button>
+        <div id="video-container"></div>
+        <button class="carrusel-btn next" id="nextBtn">▶</button>
+      </div>
+      <!-- Indicadores de página -->
+      <div id="carrusel-indicadores"></div>
+    </div>
+    <figcaption id="info-box">
+      <h2 id="titulo"></h2>
+      <p id="descripcion"></p>
+      <div id="opciones"></div>
+      <button class="cerrar-btn" onclick="cerrarModal()">Cerrar</button>
+    </figcaption>
+  </figure>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
+
+
