@@ -2,10 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Ruta Interactiva</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ruta Cafetera Experiencial - Recorrido interactivo">
+  <title>Ruta Cafetera Experiencial</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<!-- PANTALLA DE CARGA -->
 <div id="loading-screen">
   <div class="loader">
     <div class="loader-text">Cargando</div>
@@ -15,48 +19,68 @@
     <div id="percent">0%</div>
   </div>
 </div>
-<div id="mapa">
-  <img src="img/imag-finca.png" id="fondo">
 
-  <svg id="rutaSVG" viewBox="0 0 1000 500" preserveAspectRatio="none">
-<path id="camino"
-d="M 60 370
-   C 150 320, 210 380, 300 370
-   C 350 340, 380 300, 440 290
-   C 570 320, 600 250, 680 280
-   C 740 360, 1030 180, 880 320
-   C 800 370, 940 350, 990 500"
-fill="none"
-stroke="transparent"
-stroke-width="4"/>
+<!-- CONTENEDOR PRINCIPAL DEL MAPA -->
+<div id="mapa">
+  <!-- Imagen de fondo -->
+  <img src="img/imag-finca.png" id="fondo" alt="Ruta Cafetera">
+
+  <!-- SVG con la ruta (IMPORTANTE: preserveAspectRatio correcto) -->
+  <svg 
+    id="rutaSVG" 
+    viewBox="0 0 1000 500" 
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <!-- Ruta del camino -->
+    <path 
+      id="camino"
+      d="M 60 370
+         C 150 320, 210 380, 300 370
+         C 350 340, 380 300, 440 290
+         C 570 320, 600 250, 680 280
+         C 740 360, 1000 180, 890 320
+         C 800 350, 890 390, 980 500"
+      fill="none"
+      stroke="transparent"
+      stroke-width="4"
+    />
   </svg>
 
+  <!-- Personaje que se mueve -->
   <div id="personaje"></div>
+
+  <!-- Contenedor de puntos interactivos -->
   <div id="puntos"></div>
 </div>
 
+<!-- MODAL CON INFORMACIÓN -->
 <div id="modal">
   <figure id="modal-content">
+    <!-- COLUMNA IZQUIERDA: MEDIA (VIDEO/IMAGEN) -->
     <div id="media">
-      <!-- CARRUSEL -->
-      <div id="carrusel">
-        <button class="carrusel-btn prev" id="prevBtn">◀</button>
+      <!-- CARRUSEL PARA MÚLTIPLES VIDEOS -->
+      <div id="carrusel" style="display: none;">
+        <button class="carrusel-btn" id="prevBtn" title="Video anterior">◀</button>
         <div id="video-container"></div>
-        <button class="carrusel-btn next" id="nextBtn">▶</button>
+        <button class="carrusel-btn" id="nextBtn" title="Siguiente video">▶</button>
       </div>
-      <!-- Indicadores de página -->
+      <!-- Indicadores del carrusel -->
       <div id="carrusel-indicadores"></div>
     </div>
+
+    <!-- COLUMNA DERECHA: INFORMACIÓN -->
     <figcaption id="info-box">
       <h2 id="titulo"></h2>
       <p id="descripcion"></p>
       <div id="opciones"></div>
-      <button class="cerrar-btn" onclick="cerrarModal()">Cerrar</button>
+      <button class="cerrar-btn" onclick="cerrarModal()" title="Cerrar información">Cerrar</button>
     </figcaption>
   </figure>
 </div>
+
+<!-- SCRIPT -->
 <script src="script.js"></script>
+
 </body>
 </html>
-
-

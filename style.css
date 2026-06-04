@@ -1,21 +1,39 @@
-body {
+* {
+  box-sizing: border-box;
+}
+
+html, body {
   margin: 0;
-  font-family: Arial;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: Arial, sans-serif;
   background: #f4f1ea;
 }
 
+/* CONTENEDOR PRINCIPAL */
 #mapa {
   position: relative;
-  max-width: 1200px;
-  margin: auto;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #f4f1ea;
+  aspect-ratio: 2 / 1;
 }
 
 #fondo {
   width: 100%;
+  height: 100%;
   display: block;
+  object-fit: fill;
+  object-position: center;
 }
 
-/* SVG */
+/* SVG - MANTENER PROPORCIONES */
 #rutaSVG {
   position: absolute;
   top: 0;
@@ -34,17 +52,21 @@ body {
   position: absolute;
   transform: translate(-50%, -50%);
   z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  transition: none;
 }
 
-/* PUNTOS */
+/* CONTENEDOR DE PUNTOS */
 #puntos {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  pointer-events: auto;
 }
 
+/* PUNTOS INTERACTIVOS */
 .punto {
   width: 20px;
   height: 20px;
@@ -55,16 +77,20 @@ body {
   transform: translate(-50%, -50%);
   cursor: pointer;
   z-index: 20;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+}
+
+.punto:hover {
+  transform: translate(-50%, -50%) scale(1.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
 /* =========================
-   MODAL - CORREGIDO PARA CARRUSEL
+   MODAL - RESPONSIVE
 ========================= */
 #modal {
   position: fixed;
-  width: 800px;
-  max-width: 90vw;
-  max-height: 85vh;
   background: linear-gradient(145deg, #fffaf3, #f3e7d3);
   border: 1px solid rgba(120, 80, 40, 0.25);
   border-radius: 12px;
@@ -73,9 +99,27 @@ body {
   z-index: 9999;
   display: none;
   overflow-y: auto;
+  max-height: 85vh;
+  width: 85vw;
+  max-width: 800px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: modalEntrada 0.3s ease-out;
 }
 
-/* Figure como contenedor flex */
+@keyframes modalEntrada {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* CONTENIDO DEL MODAL */
 #modal-content {
   display: flex;
   gap: 15px;
@@ -85,20 +129,24 @@ body {
   align-items: flex-start;
 }
 
-/* Columna izquierda */
+/* COLUMNA IZQUIERDA - MEDIA */
 #media {
   flex: 1;
   min-width: 200px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Columna derecha */
+/* COLUMNA DERECHA - INFO */
 #info-box {
   flex: 1.2;
   min-width: 200px;
+  margin: 0;
 }
 
-/* Video normal */
+/* VIDEO NORMAL */
 #media video {
   width: 100%;
   max-height: 400px;
@@ -109,7 +157,7 @@ body {
   background: #1a1a1a;
 }
 
-/* Imagen normal */
+/* IMAGEN */
 #media img {
   width: 100%;
   max-height: 250px;
@@ -118,7 +166,7 @@ body {
   border: 3px solid #c8a97e;
 }
 
-/* Título */
+/* TÍTULO */
 #titulo {
   font-size: 20px;
   font-weight: bold;
@@ -129,19 +177,19 @@ body {
   padding-bottom: 6px;
 }
 
-/* Descripción */
+/* DESCRIPCIÓN */
 #descripcion {
   font-size: 13px;
   color: #5a3d2b;
   line-height: 1.5;
   margin-bottom: 12px;
   white-space: pre-line;
-  max-height: 300px;
+  max-height: 250px;
   overflow-y: auto;
-  padding-right: 5px;
+  padding-right: 8px;
 }
 
-/* Botones de opciones */
+/* BOTONES DE OPCIONES */
 #opciones {
   display: flex;
   flex-wrap: wrap;
@@ -168,7 +216,11 @@ body {
   filter: brightness(1.1);
 }
 
-/* Botón cerrar */
+#opciones button:active {
+  transform: scale(0.98);
+}
+
+/* BOTÓN CERRAR */
 #modal .cerrar-btn {
   width: 100%;
   margin-top: 12px;
@@ -189,7 +241,11 @@ body {
   filter: brightness(1.1);
 }
 
-/* Scrollbar */
+#modal .cerrar-btn:active {
+  transform: scale(0.98);
+}
+
+/* SCROLLBAR PERSONALIZADO */
 #descripcion::-webkit-scrollbar {
   width: 4px;
 }
@@ -205,7 +261,7 @@ body {
 }
 
 /* =========================
-   CARRUSEL - CORREGIDO
+   CARRUSEL
 ========================= */
 #carrusel {
   display: flex;
@@ -219,6 +275,8 @@ body {
   flex: 1;
   min-width: 0;
   max-width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .carrusel-btn {
@@ -233,11 +291,18 @@ body {
   font-weight: bold;
   transition: all 0.2s ease;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carrusel-btn:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
   filter: brightness(1.1);
+}
+
+.carrusel-btn:active {
+  transform: scale(0.95);
 }
 
 #video-container video {
@@ -250,12 +315,13 @@ body {
   background: #1a1a1a;
 }
 
-/* Indicadores del carrusel */
+/* INDICADORES DEL CARRUSEL */
 #carrusel-indicadores {
   display: flex;
   justify-content: center;
   gap: 6px;
   margin-top: 8px;
+  width: 100%;
 }
 
 .indicador {
@@ -278,61 +344,6 @@ body {
 }
 
 /* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 768px) {
-  #modal {
-    width: 95vw;
-    padding: 12px;
-  }
-  
-  #modal-content {
-    flex-direction: column;
-  }
-  
-  #media video {
-    max-height: 280px;
-  }
-  
-  #video-container video {
-    max-height: 250px;
-    min-height: 180px;
-  }
-  
-  .carrusel-btn {
-    width: 28px;
-    height: 28px;
-    font-size: 12px;
-  }
-  
-  #titulo {
-    font-size: 18px;
-  }
-  
-  #descripcion {
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  #video-container video {
-    max-height: 200px;
-    min-height: 150px;
-  }
-  
-  .carrusel-btn {
-    width: 24px;
-    height: 24px;
-    font-size: 10px;
-  }
-  
-  #opciones button {
-    padding: 6px 10px;
-    font-size: 12px;
-  }
-}
-
-/* =========================
    LOADING SCREEN
 ========================= */
 #loading-screen {
@@ -342,7 +353,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 10000;
 }
 
 .loader {
@@ -388,37 +399,212 @@ body {
   font-size: 16px;
 }
 
-/* Ajuste pantalla completa */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
+/* =========================
+   RESPONSIVE - TABLET
+========================= */
+@media (max-width: 1024px) {
+  #modal {
+    width: 90vw;
+    max-width: 700px;
+    padding: 12px;
+  }
+  
+  #modal-content {
+    gap: 12px;
+  }
+  
+  #titulo {
+    font-size: 18px;
+  }
+  
+  #descripcion {
+    font-size: 12px;
+    max-height: 220px;
+  }
+  
+  #media video {
+    max-height: 350px;
+    min-height: 200px;
+  }
+  
+  .carrusel-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
 }
 
-#mapa {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-  height: 100vh;
+/* =========================
+   RESPONSIVE - MÓVIL
+========================= */
+@media (max-width: 768px) {
+   #mapa {
+    aspect-ratio: auto;  
+    height: auto;
+    min-height: auto;      
+    width: 100%;
+    overflow: visible;
+  }
+  #fondo {
+    object-fit: contain;  
+  }
+  #modal {
+    width: 95vw;
+    max-width: 95vw;
+    max-height: 90vh;
+    padding: 10px;
+  }
+  
+  #modal-content {
+    flex-direction: column;
+  }
+  
+  #media {
+    width: 100%;
+  }
+  
+  #info-box {
+    width: 100%;
+  }
+  
+  #titulo {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  
+  #descripcion {
+    font-size: 11px;
+    max-height: 150px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  
+  #media video {
+    max-height: 300px;
+    min-height: 180px;
+  }
+  
+  #video-container video {
+    max-height: 280px;
+    min-height: 170px;
+  }
+  
+  .carrusel-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+  }
+  
+  #opciones {
+    gap: 6px;
+  }
+  
+  #opciones button {
+    min-width: 80px;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .punto {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #333;
+  }
 }
 
-#fondo {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
+/* =========================
+   RESPONSIVE - MÓVIL PEQUEÑO
+========================= */
+@media (max-width: 480px) {
+  #modal {
+    width: 96vw;
+    max-width: 96vw;
+    max-height: 92vh;
+    padding: 8px;
+  }
+  
+  #titulo {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  
+  #descripcion {
+    font-size: 10px;
+    max-height: 120px;
+    margin-bottom: 6px;
+  }
+  
+  #media video {
+    max-height: 250px;
+    min-height: 150px;
+  }
+  
+  #video-container video {
+    max-height: 240px;
+    min-height: 140px;
+  }
+  
+  .carrusel-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+  
+  #opciones {
+    gap: 5px;
+  }
+  
+  #opciones button {
+    min-width: 70px;
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+  
+  #modal .cerrar-btn {
+    padding: 8px;
+    font-size: 11px;
+  }
+  
+  .punto {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #333;
+  }
+  
+  #personaje {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .indicador {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .indicador.activo {
+    width: 12px;
+  }
 }
 
-#rutaSVG {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+/* =========================
+   RESPONSIVE - ULTRA PEQUEÑO
+========================= */
+@media (max-width: 360px) {
+  #modal {
+    padding: 6px;
+  }
+  
+  #titulo {
+    font-size: 12px;
+  }
+  
+  #descripcion {
+    font-size: 9px;
+    max-height: 100px;
+  }
+  
+  #opciones button {
+    padding: 4px 6px;
+    font-size: 10px;
+  }
 }
-
-
