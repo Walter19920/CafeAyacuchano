@@ -60,8 +60,8 @@ Abordaremos nuestro medio de transporte para adentrarnos en las montañas del VR
 • Aire puro y paisajes andinos
 
   DATOS CURIOSOS:
-• Esta finca lleva más de 20 años produciendo café de especialidad
-• Los granos crecen entre 1,200 y 1,800 metros sobre el nivel del mar
+• Esta finca lleva más de 5 años produciendo café de especialidad
+• Los granos crecen entre 1500 y 1800 metros sobre el nivel del mar
 • El microclima del VRAEM le da ese sabor único a nuestro café
 
   AL LLEGAR:
@@ -79,7 +79,7 @@ Nos espera la finca Fortuna de Pedro, donde comenzaremos la cosecha y el proceso
       { 
         src: "media/finca inicio.mp4", 
         titulo: "🌿 Bienvenida a la Finca Fortuna de Pedro", 
-        desc: " Ubicada en el corazón del VRAEM, a 1,200 - 1,800 metros sobre el nivel del mar.\n\n Te damos la bienvenida a nuestra finca, donde cultivar nuestro café de especialidad por más de 20 años.\n\n Aquí conocerás:\n• Las plantaciones de café\n• La biodiversidad de la zona\n• A las familias productoras que hacen posible esta experiencia única\n• El microclima del VRAEM que le da ese sabor único a nuestro café.\n• El beneficio ecológico y sostenible de nuestra producción.\n• La historia y tradición cafetera de Ayacucho\n\n TIEMPO:\n• Conocer la chacra: 2 horas" 
+        desc: " Ubicada en el corazón del VRAEM, a 1500 - 1800 metros sobre el nivel del mar.\n\n Te damos la bienvenida a nuestra finca, donde cultivar nuestro café de especialidad por más de 5 años.\n\n Aquí conocerás:\n• Las plantaciones de café\n• La biodiversidad de la zona\n• A las familias productoras que hacen posible esta experiencia única\n• El microclima del VRAEM que le da ese sabor único a nuestro café.\n• El beneficio ecológico y sostenible de nuestra producción.\n• La historia y tradición cafetera de Ayacucho\n\n TIEMPO:\n• Conocer la chacra: 2 horas" 
       },
       { 
         src: "media/cafe verde.mp4", 
