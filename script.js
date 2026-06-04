@@ -24,7 +24,7 @@ const puntos = {
     nombre: "Cafetería", 
     tipo: "video", 
     media: "media/Inicio.mp4", 
-    info: `=================== PUNTO DE PARTIDA =================
+    info: `=================== PUNTO DE PARTIDA ==============
 
 Te damos la bienvenida a la Ruta Cafetera Experiencial. Aquí conocerás nuestro laboratorio, planta procesadora, trilladora y cafetería.
 
