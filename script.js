@@ -22,9 +22,13 @@ const puntos = {
   inicio: { 
     progreso: 0.05, 
     nombre: "Cafetería", 
-    tipo: "video", 
-    media: "media/Inicio.mp4", 
-    info: `=================== PUNTO DE PARTIDA ==============
+    tipo: "carrusel", 
+    contenido: [
+      {
+        tipo: "video",
+        src: "media/Inicio.mp4",
+        titulo: "Cafetería - Bienvenida",
+        desc: `=================== PUNTO DE PARTIDA ==============
 
 Te damos la bienvenida a la Ruta Cafetera Experiencial. Aquí conocerás nuestro laboratorio, planta procesadora, trilladora y cafetería.
 
@@ -41,7 +45,55 @@ Te damos la bienvenida a la Ruta Cafetera Experiencial. Aquí conocerás nuestro
 • Experiencia auténtica y personalizada
 • Conexión directa con productores locales
 • Café de especialidad del VRAEM
-• Productos 100% artesanales`, 
+• Productos 100% artesanales`
+      },
+      {
+        tipo: "imagen",
+        src: "img/cafe1.png",
+        titulo: "Cafetería - Bienvenida",
+        desc: `=================== PUNTO DE PARTIDA ==============
+
+Te damos la bienvenida a la Ruta Cafetera Experiencial. Aquí conocerás nuestro laboratorio, planta procesadora, trilladora y cafetería.
+
+  Se te entregarán los implementos necesarios para subir a la chacra.
+  Tiempo estimado: 1 hora
+
+  Luego abordaremos el carro para un viaje de 30 minutos hacia la FINCA FORTUNA DE PEDRO, donde viven las plantaciones de café.
+
+  Prepárate para vivir el café desde la cosecha hasta la taza, en contacto directo con nuestra cultura y productores locales.
+
+  ¡Te esperamos para vivir esta experiencia auténtica en el VRAEM!
+
+ ------ VALOR AGREGADO: -------
+• Experiencia auténtica y personalizada
+• Conexión directa con productores locales
+• Café de especialidad del VRAEM
+• Productos 100% artesanales`
+      },
+      {
+        tipo: "imagen",
+        src: "img/laboratorio.png",
+        titulo: "Cafetería - Laboratorio",
+        desc: `=================== PUNTO DE PARTIDA ==============
+
+Te damos la bienvenida a la Ruta Cafetera Experiencial. Aquí conocerás nuestro laboratorio, planta procesadora, trilladora y cafetería.
+
+  Se te entregarán los implementos necesarios para subir a la chacra.
+  Tiempo estimado: 1 hora
+
+  Luego abordaremos el carro para un viaje de 30 minutos hacia la FINCA FORTUNA DE PEDRO, donde viven las plantaciones de café.
+
+  Prepárate para vivir el café desde la cosecha hasta la taza, en contacto directo con nuestra cultura y productores locales.
+
+  ¡Te esperamos para vivir esta experiencia auténtica en el VRAEM!
+
+ ------ VALOR AGREGADO: -------
+• Experiencia auténtica y personalizada
+• Conexión directa con productores locales
+• Café de especialidad del VRAEM
+• Productos 100% artesanales`
+      }
+    ],
     opciones: ["carro"] 
   },
   
@@ -261,9 +313,10 @@ function abrirModal(id) {
   mediaDiv.innerHTML = "";
   
   // Si es carrusel
-  if (p.tipo === "carrusel" && p.videos) {
+  if (p.tipo === "carrusel" && (p.videos || p.contenido)) {
     mediaDiv.appendChild(carrusel);
-    mostrarCarrusel(p.videos);
+    const contenidoCarrusel = p.contenido || p.videos;
+    mostrarCarrusel(contenidoCarrusel);
   } 
   // Si es video normal
   else if (p.tipo === "video") {
@@ -335,8 +388,8 @@ function cerrarModal() {
 // FUNCIONES DEL CARRUSEL
 // ========================================
 
-function mostrarCarrusel(videos) {
-  carruselActual = videos;
+function mostrarCarrusel(contenido) {
+  carruselActual = contenido;
   carruselIndex = 0;
   carruselActivo = true;
   
@@ -344,7 +397,7 @@ function mostrarCarrusel(videos) {
   
   // Crear indicadores
   indicadoresDiv.innerHTML = "";
-  videos.forEach((_, i) => {
+  contenido.forEach((_, i) => {
     const indicador = document.createElement("div");
     indicador.className = "indicador";
     if (i === 0) indicador.classList.add("activo");
@@ -352,57 +405,72 @@ function mostrarCarrusel(videos) {
     indicadoresDiv.appendChild(indicador);
   });
   
-  actualizarVideoCarrusel();
+  actualizarCarrusel();
 }
 
-function actualizarVideoCarrusel() {
+function actualizarCarrusel() {
   if (!carruselActivo || carruselActual.length === 0) return;
   
-  const videoData = carruselActual[carruselIndex];
+  const item = carruselActual[carruselIndex];
   
   videoContainer.innerHTML = "";
-  const video = document.createElement("video");
-  video.controls = true;
-  video.src = videoData.src;
-  video.preload = "auto";
-  video.currentTime = 0;
-  videoContainer.appendChild(video);
-  videoActual = video;
+  
+  // Si es imagen
+  if (item.tipo === "imagen") {
+    const img = document.createElement("img");
+    img.src = item.src;
+    img.style.maxHeight = "350px";
+    img.style.minHeight = "220px";
+    img.style.objectFit = "contain";
+    img.style.borderRadius = "12px";
+    img.style.border = "3px solid #c8a97e";
+    img.style.backgroundColor = "#1a1a1a";
+    videoContainer.appendChild(img);
+  }
+  // Si es video o no tiene tipo especificado (compatibilidad hacia atrás)
+  else {
+    const video = document.createElement("video");
+    video.controls = true;
+    video.src = item.src;
+    video.preload = "auto";
+    video.currentTime = 0;
+    videoContainer.appendChild(video);
+    videoActual = video;
+    
+    setTimeout(() => {
+      if (videoActual) {
+        videoActual.play().catch(() => {});
+      }
+    }, 50);
+  }
   
   // Actualizar textos
-  titulo.textContent = videoData.titulo;
-  descripcion.textContent = videoData.desc;
+  titulo.textContent = item.titulo;
+  descripcion.textContent = item.desc;
   
   // Actualizar indicadores
   const indicadores = document.querySelectorAll(".indicador");
   indicadores.forEach((ind, i) => {
     ind.classList.toggle("activo", i === carruselIndex);
   });
-  
-  // Reproducir
-  setTimeout(() => {
-    if (videoActual) {
-      videoActual.play().catch(() => {});
-    }
-  }, 50);
 }
 
 function videoSiguiente() {
   if (!carruselActivo || carruselActual.length === 0) return;
   carruselIndex = (carruselIndex + 1) % carruselActual.length;
-  actualizarVideoCarrusel();
+  actualizarCarrusel();
 }
 
 function videoAnterior() {
   if (!carruselActivo || carruselActual.length === 0) return;
   carruselIndex = (carruselIndex - 1 + carruselActual.length) % carruselActual.length;
-  actualizarVideoCarrusel();
+  actualizarCarrusel();
 }
 
 function irAlVideo(index) {
   if (!carruselActivo) return;
   carruselIndex = index;
-  actualizarVideoCarrusel();
+  actualizarCarrusel();
 }
 
 function ocultarCarrusel() {

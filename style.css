@@ -608,3 +608,17 @@ body {
     font-size: 10px;
   }
 }
+
+/* TODAS LAS IMÁGENES EN CARRUSEL */
+#video-container img {
+  max-height: 400px !important;
+  min-height: 380px !important;
+  width: 100% !important;
+}
+
+/* IMÁGENES EN MEDIA (Primera imagen del modal) */
+#media img {
+  max-height: 400px !important;
+  min-height: 380px !important;
+  width: 100% !important;
+}
